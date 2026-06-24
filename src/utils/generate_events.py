@@ -34,7 +34,8 @@ def generate_batch(n_shipments=50, batch_id=1):
                 "service_level": service_level,
                 "estimated_delivery_ts": estimated_delivery_ts.isoformat(),
                 "weight_kg": round(random.uniform(0.5, 30.0), 2),
-                "customer_id": f"cust_{random.randint(1000, 9999)}"
+                "customer_id": f"cust_{random.randint(1000, 9999)}",
+                "region": random.choice(["North", "South", "East", "West"])
             })
 
     path = Path(VOLUME_PATH)
