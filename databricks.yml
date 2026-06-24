@@ -1,0 +1,21 @@
+bundle:
+  name: streaming_logistics_pipeline
+
+variables:
+  catalog:
+    default: rapidroute
+  warehouse_id:
+    lookup:
+      warehouse: "Serverless Starter Warehouse"
+
+targets:
+  dev:
+    default: true
+    mode: development
+    workspace:
+      host: https://dbc-626eaf36-4d96.cloud.databricks.com
+  prod:
+    mode: production
+    workspace:
+      host: https://dbc-626eaf36-4d96.cloud.databricks.com
+      root_path: /Workspace/Users/derrick.white@umbrage.com/.bundle/${bundle.name}/${bundle.target}
