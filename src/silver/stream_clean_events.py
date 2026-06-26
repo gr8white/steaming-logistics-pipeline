@@ -49,21 +49,3 @@ clean_stream = (
     .trigger(availableNow=True)
     .toTable(TARGET_TABLE)
 )
-
-silver_clean = spark.read.table("rapidroute.silver.shipment_events_clean")
-
-# Check for any UNKNOWN statuses
-silver_clean.filter(col("status") == "UNKNOWN").count()
-
-# Check timestamp parsing succeeded
-silver_clean.select(
-    "shipment_id", "status",
-    "event_timestamp_parsed", "estimated_delivery_ts_parsed"
-).show(5, truncate=False)
-
-# Confirm no nulls on critical fields
-from pyspark.sql.functions import count, when, isnan
-silver_clean.select(
-    count(when(col("shipment_id").isNull(), 1)).alias("null_shipment_ids"),
-    count(when(col("event_timestamp_parsed").isNull(), 1)).alias("null_timestamps")
-).show()
